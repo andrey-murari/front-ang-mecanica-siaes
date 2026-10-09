@@ -1,0 +1,34 @@
+<main>
+  <h1>Endpoint</h1>
+  <p class="hint">
+    The default URL is set in <code>src/app/api.config.ts</code>. You can change it here before
+    fetching.
+  </p>
+
+  <form (ngSubmit)="fetchJson()">
+    <label for="endpoint">URL</label>
+    <div class="row">
+      <input
+        id="endpoint"
+        name="endpoint"
+        type="url"
+        required
+        autocomplete="off"
+        [ngModel]="endpoint()"
+        (ngModelChange)="endpoint.set($event)"
+      />
+      <button type="submit" [disabled]="loading()">
+        {{ loading() ? 'Fetching…' : 'Fetch' }}
+      </button>
+    </div>
+  </form>
+
+  @if (error(); as message) {
+    <p class="error" role="alert">{{ message }}</p>
+  }
+
+  @if (result() !== undefined) {
+    <h2>JSON</h2>
+    <pre>{{ result() | json }}</pre>
+  }
+</main>
